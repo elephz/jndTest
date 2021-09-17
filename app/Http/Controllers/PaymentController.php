@@ -3,25 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Logistic;
+use App\Models\Payment;
 use DB;
 use Session;
-
-class LogisticController extends Controller
+class PaymentController extends Controller
 {
     public function index()
     {
-        return view('logistics.index')->with('data',Logistic::all());
+        return view('payment.index')->with('data',Payment::all());
     }
 
     public function store(Request $request)
     {
         try {
             DB::beginTransaction();
-            $db = new Logistic;
-            $db->name = $request->name;
-            $db->detail = $request->detail;
-            $db->price = $request->price;
+            $db = new Payment;
+            $db->bank_name = $request->bank_name;
+            $db->account_number = $request->account_number;
+            $db->account_name = $request->account_name;
             $db->save();
             DB::commit();
             Session::flash('message', 'บันทึกสำเร็จ');
@@ -34,27 +33,11 @@ class LogisticController extends Controller
         return redirect()->back();
     }
 
-
-    public function update($id)
-    {
-        try {
-            DB::beginTransaction();
-            $db = Logistic::find($id);
-            $db->hidden = !$db->hidden;
-            $db->update();
-            DB::commit();
-            return response()->json(['success' => true],200);
-        } catch (\Exxception $e) {
-            DB::rollBack();
-            return response()->json(['success' => false],500);
-        } 
-    }
-
     public function delete($id)
     {
         try {
             DB::beginTransaction();
-            $db = Logistic::find($id);
+            $db = Payment::find($id);
             $db->delete();
             DB::commit();
             Session::flash('message', 'ลบสำเร็จ');

@@ -57,7 +57,7 @@
             </li>
 
             <li class="menu">
-                <a href="#ecommerce" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <a href="{{route('payment')}}"  class="dropdown-toggle">
                     <div class="">
                         <i class="flaticon-money"></i>
                         <span class="fThai">การชำระเงิน</span>
@@ -94,16 +94,31 @@
                     </li>
                 </ul>
             </li>
-            
-
             <li class="menu">
-                <a href="#ecommerce" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <a href="#ui-features-1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i class="flaticon-settings-1"></i>
                         <span class="fThai">ตั้งค่า</span>
                     </div>
+                    <div>
+                        <i class="flaticon-right-arrow"></i>
+                    </div>
                 </a>
+                <ul class="collapse submenu list-unstyled" id="ui-features-1" data-parent="#accordionExample">
+                    <li>
+                        <a class="fThai" href="ui_helper_classes.html"> ตั้งค่าทั่วไป </a>
+                    </li>
+                    <li>
+                        <a class="fThai" href="ui_color_library.html"> ตั้งค่าคำสั่งซื้อ </a>
+                    </li>
+                    <li>
+                        <a class="fThai" href="ui_color_library.html"> ตั้งค่า Member Point </a>
+                    </li>
+                </ul>
             </li>
+            
+
+           
         </ul>
     </nav>
 

@@ -35,18 +35,18 @@
 
 @section('content')
 @section('pageIndex')
-<li class="active"><a href="javscript:void(0);">การจัดส่ง</a></li>
+<li class="active"><a href="javscript:void(0);">การชำระเงิน</a></li>
 @endsection
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center">
         <div class="page-title text-left">
-            <h3>ช่องทางการจัดส่ง</h3>
+            <h3>ช่องทางการชำระเงิน</h3>
         </div>
         <div>
             <button class="btn-material btn-material-primary md-trigger" data-modal="modal-1">
                 <i class="flaticon-plus-1 mr-1"></i>
-                เพิ่มช่องทางการจัดส่ง
+                เพิ่มช่องทางการชำระเงิน
             </button>
 
         </div>
@@ -73,29 +73,23 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
-                                            <th>ชื่อ</th>
-                                            <th>ค่าขนส่ง</th>
-                                            <th>รายละเอียด</th>
-                                            <th>แสดงผลต่อลูกค้า</th>
+                                            <th>ชื่อธนาคาร</th>
+                                            <th>เลขที่บัญชี</th>
+                                            <th>ชื่อบัญชี</th>
+
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($data as $key => $value)
+                                    @foreach($data as $key => $value)
                                         <tr>
                                             <td class="text-center">{{$key+1}}</td>
-                                            <td class="text-primary">{{$value->name}}</td>
-                                            <td>฿{{number_format($value->price,2)}}</td>
-                                            <td>{{$value->detail}}</td>
-                                            <td class="text-center">
-                                                <select class="form-control" data="{{$value->id}}">
-                                                    <option value="show" {{$value->hidden == 0 ? "selected" : ""}}>แสดง</option>
-                                                    <option value="not show" {{$value->hidden == 1 ? "selected" : ""}}>ไม่แสดง</option>
-                                                </select>
-                                            </td>
+                                            <td class="text-primary">{{$value->bank_name}}</td>
+                                            <td>{{$value->account_number}}</td>
+                                            <td>{{$value->account_name}}</td>
                                             <td class="text-center text-danger">
-                                                <i class="flaticon-delete-fill icon" onclick="deleteItem('{{$value->name}}',this)"></i>
-                                                <form action="{{route('logistics.delete',['id'=>$value->id])}}" method="post" class="d-none">
+                                                <i class="flaticon-delete-fill icon" onclick="deleteItem('{{$value->bank_name}}',this)"></i>
+                                                <form action="{{route('payment.delete',['id'=>$value->id])}}" method="post" class="d-none">
                                                     @csrf
                                                     @method('delete')
                                                 </form>
@@ -119,26 +113,26 @@
             <h3 class="pt-4">เพิ่มช่องทางการจัดส่ง</h3>
             <button class="d-none md-close" id="close_modal"></button>
             <div>
-                <form method="post" action="{{route('logistics.store')}}" id="create">
+                <form method="post" action="{{route('payment.store')}}" id="create">
                     @csrf
                     <div class="form-group mb-4">
-                        <label for="formGroupExampleInput">บรัษัทขนส่ง</label>
-                        <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="กรุณาระบุบรัษัทขนส่ง">
+                        <label for="formGroupExampleInput">ธนาคาร</label>
+                        <input type="text" class="form-control" name="bank_name" id="formGroupExampleInput" placeholder="กรุณาระบุธนาคาร">
                     </div>
                     <div class="form-group mb-4">
-                        <label for="formGroupExampleInput2">ค่าจัดส่ง</label>
-                        <input type="number" class="form-control" name="price" id="formGroupExampleInput2" placeholder="0.00">
+                        <label for="formGroupExampleInput2">เลขที่บัญชี</label>
+                        <input type="text" class="form-control" name="account_number" id="formGroupExampleInput2" placeholder="กรุณาระบุเลขที่บัญชี">
                     </div>
                     <div class="form-group mb-4">
-                        <label for="formGroupExampleInput2">รายละเอียด</label>
-                        <textarea rows="4" cols="50" name="detail" class="form-control" placeholder="รายละเอียดการจัดส่งสินค้า เช่น ระยะเวลาการจัดส่ง รอบจัดส่ง เพื่อเป็นข้อมูลให้กับลูกค้า"></textarea>
+                        <label for="formGroupExampleInput3">ชื่อบัญชี</label>
+                        <input type="text" class="form-control" name="account_name" id="formGroupExampleInput3" placeholder="กรุณาระบุชื่อบัญชี">
                     </div>
                     <div class="d-flex  justify-content-between">
                         <div class="w-100 text-left">
                             <p class="text-danger f900 text-left d-none" id="alt-msg">กรุณากรอกข้อมูลให้ครบถ้วน !</p>
                         </div>
                         <div class="w-100 text-right">
-                            <button class="btn-material btn-material-default md-close" onclick="colseModal();return false">ยกเลิก</button>
+                            <button class="btn-material btn-material-default " onclick="colseModal();return false">ยกเลิก</button>
                             <button class="btn-material btn-material-primary" id="btn-save">บันทึก</button>
                         </div>
                     </div>
@@ -162,11 +156,11 @@
     function colseModal() {
         $("button#close_modal").click();
     }
-    
+
     function deleteItem(name, e) {
         var jquery_object = jQuery(e);
         swal({
-            title: 'ต้องการลบ' + name,
+            title: 'ต้องการลบ ' + name,
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -179,7 +173,7 @@
                 setTimeout(() => {
                     jquery_object.closest('td').find('form').submit()
                 }, 300)
-                
+
             }
         })
     }
@@ -200,30 +194,14 @@
             return
         }
 
-        $("button#close_modal").click();
+        colseModal()
 
         setTimeout(() => {
-            $("form#create").submit();
+            $("form").submit();
         }, 500)
 
     })
 
-    $('select').on('change', function() {
-        const id = $(this).attr('data');
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            },
-            type: "put",
-            url: 'logistics/display/' + id,
-            success: function(response) {
-                console.log(response);
-            }
-        })
-
-
-
-    });
+   
 </script>
 @endsection

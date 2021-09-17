@@ -10,11 +10,11 @@
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
     <!-- font -->
 
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <link href="{{ asset('theme/admin/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('theme/admin/assets/css/plugins.css') }}" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
@@ -41,7 +41,7 @@
         }
 
         .f900 {
-            font-weight: 900;
+            font-weight: 600;
         }
         .swal2-icon.swal2-warning{
             font-size: 34px !important;
@@ -130,6 +130,7 @@
        
     </script>
     <!-- custom script -->
+    @yield('script')
 </body>
 
 </html>
